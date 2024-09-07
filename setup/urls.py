@@ -18,8 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from search_localization.views import home
+from weather_data.views import get_weather_by_city_name
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home),
+    path("get_weather_by_city_name/<str:city_name>/", get_weather_by_city_name),
 ]
