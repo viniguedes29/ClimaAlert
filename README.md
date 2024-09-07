@@ -13,13 +13,13 @@
 
 ## Tecnologias Utilizadas (a definir)
 
-- **Frontend:** 
-- **Backend:** 
-- **Banco de Dados:** 
+- **Frontend:**
+- **Backend:**
+- **Banco de Dados:**
 - **APIs Externas:** OpenUV, OpenWeatherMap, NASA FIRMS
 - **Metodologia de Desenvolvimento:** Kanban
 - **Integração Contínua:** GitHub Actions
-- **Deploy:** 
+- **Deploy:**
 
 ## Estrutura do Projeto (a definir)
 
@@ -28,14 +28,14 @@ ClimaAlert/
 │
 ├── public/                 # Arquivos públicos do projeto (HTML, imagens, etc.)
 ├── src/                    # Código fonte do frontend
-│   ├── components/         # Componentes 
+│   ├── components/         # Componentes
 │   ├── pages/              # Páginas principais da aplicação
 │   ├── services/           # Integrações com APIs externas
-│   └── styles/             # Arquivos de estilo 
+│   └── styles/             # Arquivos de estilo
 │
 ├── backend/                # Código fonte do backend
 │   ├── controllers/        # Lógica de controle das rotas
-│   ├── models/             # Modelos de dados 
+│   ├── models/             # Modelos de dados
 │   ├── routes/             # Definição das rotas da API
 │   └── utils/              # Funções utilitárias
 │
@@ -43,3 +43,11 @@ ClimaAlert/
 ├── .github/                # Configurações de CI/CD
 ├── docs/                   # Documentação do projeto
 └── README.md               # Documentação principal
+
+```
+
+## Start server
+
+```
+OPEN_WEATHER_API_KEY="<API_KEY>" python3 manage.py runserver
+```
