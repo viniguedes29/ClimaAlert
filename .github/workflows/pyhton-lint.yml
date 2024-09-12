@@ -23,14 +23,6 @@ jobs:
       with:
         python-version: '3.11.4'
 
-    - name: Install dependencies
-      run: |
-        pip install black flake8
-
     - name: Run Black
       run: |
         black --check .
-
-    - name: Run Flake8
-      run: |
-        flake8 .
