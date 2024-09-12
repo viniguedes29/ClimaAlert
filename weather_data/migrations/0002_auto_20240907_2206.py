@@ -5,28 +5,30 @@ import json
 
 
 def add_initial_data(apps, schema_editor):
-    Cities = apps.get_model('weather_data', 'City')
+    Cities = apps.get_model("weather_data", "City")
     db_alias = schema_editor.connection.alias
 
-    file_path = 'city_data/city_data.json'
-    with open(file_path, 'r') as file:
+    file_path = "city_data/city_data.json"
+    with open(file_path, "r") as file:
         data = json.load(file)
 
     for item in data:
         Cities.objects.using(db_alias).update_or_create(
-            id=item['id'],
+            id=item["id"],
             defaults={
-                'name': item['name'],
-                'state': item['state'],
-                'country': item['country'],
-                'lon': item['coord']['lon'],
-                'lat': item['coord']['lat']
-            })
-        
+                "name": item["name"],
+                "state": item["state"],
+                "country": item["country"],
+                "lon": item["coord"]["lon"],
+                "lat": item["coord"]["lat"],
+            },
+        )
+
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('weather_data', '0001_initial'),
+        ("weather_data", "0001_initial"),
     ]
 
     operations = [
