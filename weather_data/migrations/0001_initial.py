@@ -7,19 +7,18 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='City',
+            name="City",
             fields=[
-                ('id', models.IntegerField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=255)),
-                ('state', models.CharField(blank=True, max_length=255)),
-                ('country', models.CharField(max_length=2)),
-                ('lat', models.FloatField(default=0.0)),
-                ('lon', models.FloatField(default=0.0)),
+                ("id", models.IntegerField(primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=255)),
+                ("state", models.CharField(blank=True, max_length=255)),
+                ("country", models.CharField(max_length=2)),
+                ("lat", models.FloatField(default=0.0)),
+                ("lon", models.FloatField(default=0.0)),
             ],
         ),
     ]
