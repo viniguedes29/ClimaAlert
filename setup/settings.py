@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-0j!mxm)vn)nol_mp95etk+bm6q1*&akkijsm*y#+ritl3w-a2&"
 
 OPEN_WEATHER_API_KEY = os.getenv("OPEN_WEATHER_API_KEY")
+OPEN_WEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
