@@ -23,5 +23,9 @@ from weather_data.views import get_weather_by_city_name
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", home, name="home"),
-    path("get_weather_by_city_name/", get_weather_by_city_name, name="get_weather_by_city_name")
+    path(
+        "get_weather_by_city_name/",
+        get_weather_by_city_name,
+        name="get_weather_by_city_name",
+    ),
 ]
