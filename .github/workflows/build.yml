@@ -10,9 +10,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-
       - name: Install dependencies
         run: npm install
 
+      - name: Run tests
+        run: python manage.py test
+      
       - name: Run build
         run: npm run build
