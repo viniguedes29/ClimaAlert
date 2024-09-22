@@ -10,7 +10,6 @@ def get_weather_by_city_name(request):
 
     api_key = settings.OPEN_WEATHER_API_KEY
     api_url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric&lang=pt"
-
     try:
         response = requests.get(api_url)
         data = response.json()

@@ -28,4 +28,5 @@ urlpatterns = [
         get_weather_by_city_name,
         name="get_weather_by_city_name",
     ),
+    path("weather/", get_weather_by_city_name, name="weather_by_city_name"),
 ]
