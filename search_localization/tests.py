@@ -15,19 +15,14 @@ class SearchCityHTMLTestCase(TestCase):
         self.assertContains(response, "<title>Busca de Clima</title>")
 
         self.assertContains(response, "<h1>Pesquise sua cidade e veja o tempo!</h1>")
-        
-        self.assertContains(
-            response, 
-            '<form action="/get_weather_by_city_name/" method="get">'
-        )
 
+        self.assertContains(
+            response, '<form action="/get_weather_by_city_name/" method="get">'
+        )
 
         self.assertContains(
             response,
             '<input type="text" name="city_name" placeholder="Digite o nome da cidade">',
-            
         )
 
-        self.assertContains(
-            response, '<button type="submit">Buscar cidade</button>'
-        )
+        self.assertContains(response, '<button type="submit">Buscar cidade</button>')
