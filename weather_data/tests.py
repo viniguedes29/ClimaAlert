@@ -13,7 +13,7 @@ class WeatherTestCase(TestCase):
         # Mock the API response
         mock_response = {
             "name": "São Paulo",
-            "weather": [{"description": "céu limpo"}],
+            "weather": [{"id": 800, "description": "céu limpo"}],
             "main": {"temp": 25, "humidity": 60},
             "clouds": {"all": 0},
         }
@@ -28,7 +28,7 @@ class WeatherTestCase(TestCase):
         # Check the response
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "São Paulo")
-        self.assertContains(response, "céu limpo")
+        self.assertContains(response, "Aproveite o dia!")
         self.assertContains(response, 25)
         self.assertContains(response, 60)
         self.assertContains(response, 0)

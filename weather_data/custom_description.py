@@ -9,7 +9,6 @@ with open(json_path, "r", encoding="utf-8") as file:
 
 
 def get_custom_description(key, extra):
-    print(f"{key}{extra}")
     if f"{key}{extra}" in descriptions:
         return descriptions[f"{key}{extra}"]
     elif f"{key}0" in descriptions:
