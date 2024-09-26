@@ -16,11 +16,18 @@ class City(models.Model):
 
 class CityWeather:
     def __init__(
-        self, city_name, weather_description, temperature, humidity, cloudiness
+        self,
+        city_name,
+        weather_description,
+        temperature,
+        feels_like,
+        humidity,
+        cloudiness,
     ):
         # get city from the database
         city_name = City.objects.get(name=city_name)
         self.weather_description = weather_description
         self.temperature = temperature
+        self.feels_like = feels_like
         self.humidity = humidity
         self.cloudiness = cloudiness

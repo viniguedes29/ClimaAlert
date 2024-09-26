@@ -11,6 +11,7 @@ def get_weather_by_city_name(request):
     api_key = settings.OPEN_WEATHER_API_KEY
     api_url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric&lang=pt"
     try:
+        ## TODO(Thiago4532): Extrair a lógica de request da API para outro método/classe.
         response = requests.get(api_url)
         data = response.json()
 
@@ -19,6 +20,7 @@ def get_weather_by_city_name(request):
                 "city_name": data["name"],
                 "weather_description": data["weather"][0]["description"],
                 "temperature": data["main"]["temp"],
+                "feels_like": data["main"]["feels_like"],
                 "humidity": data["main"]["humidity"],
                 "cloudiness": data["clouds"]["all"],
             }
