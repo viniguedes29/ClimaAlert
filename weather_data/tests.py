@@ -47,9 +47,9 @@ class WeatherTestCase(TestCase):
         )
 
         # Check the response
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Unknown City")
-        self.assertNotContains(response, "temperature")
+        self.assertEqual(response.status_code, 404)
+        self.assertContains(response, "Unknown City", status_code=404)
+        self.assertNotContains(response, "temperature", status_code=404)
 
 
 class WeatherHTMLTestCase(TestCase):
@@ -99,10 +99,15 @@ class WeatherHTMLTestCase(TestCase):
             reverse("weather_by_city_name"), {"city_name": "Cidade Inexistente"}
         )
 
-        self.assertEqual(response.status_code, 200)
-
-        self.assertContains(response, "<h1>Tempo em Cidade Inexistente</h1>", html=True)
+        self.assertEqual(response.status_code, 404)
 
         self.assertContains(
-            response, "<p>Nenhuma informação disponível.</p>", html=True
+            response, "<h1>Tempo em Cidade Inexistente</h1>", html=True, status_code=404
+        )
+
+        self.assertContains(
+            response,
+            "<p>Nenhuma informação disponível.</p>",
+            html=True,
+            status_code=404,
         )
