@@ -16,19 +16,19 @@ def get_weather_by_city_name(request):
         response = requests.get(api_url)
         data = response.json()
 
-        weather_id = data["weather"][0]["id"]
-        temperature = data["main"]["temp"]
-        humidity = data["main"]["humidity"]
-
-        extra = 0
-        if temperature > 34:  # flag de temperatura alta
-            extra |= 1 << 0
-        if humidity < 30:  # flag de umidade baixa
-            extra |= 1 << 1
-
-        weather_description = get_custom_description(weather_id, extra)
-
         if response.status_code == 200:
+            weather_id = data["weather"][0]["id"]
+            temperature = data["main"]["temp"]
+            humidity = data["main"]["humidity"]
+
+            extra = 0
+            if temperature > 34:  # flag de temperatura alta
+                extra |= 1 << 0
+            if humidity < 30:  # flag de umidade baixa
+                extra |= 1 << 1
+
+            weather_description = get_custom_description(weather_id, extra)
+
             CityWeather = {
                 "city_name": data["name"],
                 "weather_description": weather_description,
@@ -50,6 +50,9 @@ def get_weather_by_city_name(request):
             )
 
     except Exception as e:
+        ## TODO(Thiago4532): Atualmente estamos ignorando qualquer exceção que ocorra durante a request da API.
+        ## Essa informação poderia ser útil para o servidor/usuário, apenas ignorar faz os erros
+        ## passarem despercebidos e dificulta a depuração.
         return render(
             request,
             "weather_data/weather.html",
