@@ -15,6 +15,8 @@ jobs:
 
       - name: Run tests
         run: python manage.py test
+        env:
+          OPEN_WEATHER_API_KEY: dummy-api-key
       
       - name: Run build
         run: npm run build
