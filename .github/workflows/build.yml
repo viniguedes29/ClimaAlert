@@ -13,11 +13,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Django tests for search_localization
-        run: python manage.py test search_localization.tests
-      
-      - name: Run Django tests for weather_data
-        run: python manage.py test weather_data.tests
+      - name: Run tests
+        run: python manage.py test
       
       - name: Run build
         run: npm run build
