@@ -11,50 +11,41 @@ def get_weather_by_city_name(request):
 
     api_key = settings.OPEN_WEATHER_API_KEY
     api_url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric&lang=pt"
-    try:
-        ## TODO(Thiago4532): Extrair a lógica de request da API para outro método/classe.
-        response = requests.get(api_url)
-        data = response.json()
 
-        if response.status_code == 200:
-            weather_id = data["weather"][0]["id"]
-            temperature = data["main"]["temp"]
-            humidity = data["main"]["humidity"]
+    ## TODO(Thiago4532): Extrair a lógica de request da API para outro método/classe.
+    response = requests.get(api_url)
+    data = response.json()
 
-            extra = 0
-            if temperature > 34:  # flag de temperatura alta
-                extra |= 1 << 0
-            if humidity < 30:  # flag de umidade baixa
-                extra |= 1 << 1
+    if response.status_code == 200:
+        weather_id = data["weather"][0]["id"]
+        temperature = data["main"]["temp"]
+        humidity = data["main"]["humidity"]
 
-            weather_description = get_custom_description(weather_id, extra)
+        extra = 0
+        if temperature > 34:  # flag de temperatura alta
+            extra |= 1 << 0
+        if humidity < 30:  # flag de umidade baixa
+            extra |= 1 << 1
 
-            CityWeather = {
-                "city_name": data["name"],
-                "weather_description": weather_description,
-                "temperature": temperature,
-                "feels_like": data["main"]["feels_like"],
-                "humidity": humidity,
-                "cloudiness": data["clouds"]["all"],
-            }
-            return render(
-                request,
-                "weather_data/weather.html",
-                {"city_name": city_name, "weather_data": CityWeather},
-            )
-        else:
-            return render(
-                request,
-                "weather_data/weather.html",
-                {"city_name": city_name, "weather_data": None},
-            )
+        weather_description = get_custom_description(weather_id, extra)
 
-    except Exception as e:
-        ## TODO(Thiago4532): Atualmente estamos ignorando qualquer exceção que ocorra durante a request da API.
-        ## Essa informação poderia ser útil para o servidor/usuário, apenas ignorar faz os erros
-        ## passarem despercebidos e dificulta a depuração.
+        CityWeather = {
+            "city_name": data["name"],
+            "weather_description": weather_description,
+            "temperature": temperature,
+            "feels_like": data["main"]["feels_like"],
+            "humidity": humidity,
+            "cloudiness": data["clouds"]["all"],
+        }
+        return render(
+            request,
+            "weather_data/weather.html",
+            {"city_name": city_name, "weather_data": CityWeather},
+        )
+    else:
         return render(
             request,
             "weather_data/weather.html",
             {"city_name": city_name, "weather_data": None},
+            status=404,
         )
