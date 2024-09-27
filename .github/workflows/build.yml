@@ -10,13 +10,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11.4'
+  
+      - name: Install Black
+        run: |
+          pip install black
+  
+      - name: Run Black
+        run: |
+          black --check .
+
       - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: Run tests
         run: python manage.py test
         env:
-          OPEN_WEATHER_API_KEY: dummy-api-key
-      
-      - name: Run build
-        run: npm run build
+          OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
