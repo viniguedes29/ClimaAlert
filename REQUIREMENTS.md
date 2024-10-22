@@ -1,11 +1,11 @@
 ## A3 - Técnicas de elicitação de requisitos utilizadas
 
 ### 1. Brainstorming
-Para explorar novas funcionalidades e melhorias para a plataforma **Clima Alert**, realizamos uma sessão de brainstorming on-line pelo meet. Nessa sessão, discutimos e registramos ideias que poderiam ser implementadas, focando em aspectos como interface, novas integrações e funcionalidades úteis para os usuários. A imagem do brainstorming, mostrando as ideias discutidas e mapeadas durante a sessão, está anexada abaixo como evidência.
+Para explorar novas funcionalidades e melhorias para a plataforma **Clima Alert**, realizamos uma sessão de brainstorming on-line pelo meet com todos os membros do grupo. Nessa sessão, discutimos e registramos ideias que poderiam ser implementadas, focando em aspectos como interface, novas integrações e demais funcionalidades úteis para os usuários. A imagem do brainstorming, mostrando as ideias discutidas e mapeadas durante a sessão, está anexada abaixo como evidência.
 
 **Evidências:**
 - ![Imagem do Brainstorming](evidences/brainstorming.png)
-- (Espaço reservado para anexar a foto da reunião no Meet)
+- ![Imagem da reunião](evidences/reuniao_meet.png)
 
 ### 2. Entrevista
 Também realizamos uma entrevista com perguntas estruturadas para entender as necessidades e preferências dos usuários em relação à plataforma. As perguntas foram formuladas para coletar insights sobre as informações climáticas mais relevantes, formatos de apresentação, tipos de notificações e personalização que os usuários desejam.
