@@ -7,9 +7,6 @@ Para explorar novas funcionalidades e melhorias para a plataforma **Clima Alert*
 - ![Imagem do Brainstorming](evidences/brainstorming.png)
 - ![Imagem da reunião](evidences/reuniao_meet.png)
 
-## Conclusão
-Para registrar as evidências das técnicas de elicitação de requisitos utilizadas, anexamos as imagens e registros das sessões realizadas, incluindo o brainstorming e a entrevista.
-
 ### 2. Benchmark
 
 Escolhemos como segunda atividade de elicitação a atividade de *benchmarking*. Para isso, nosso grupo escolheu fazer a análise de 3 sites: [weather.com](https://weather.com), [tempo.com](https://www.tempo.com) e o [CEPAGRI](https://www.cpa.unicamp.br/) da própria UNICAMP.
