@@ -126,3 +126,14 @@ A sessão de previsão do tempo é extremamente detalhada, algo que novamente s�
 
 - O glossário não parecia estar funcionando no momento da análise.
 - O foco exclusivo em Campinas limita a aplicação para usuários fora dessa região.
+
+#### Requisitos
+
+A partir das informações acima, temos alguns requisitos que podemos extrair da análise:
+   - Localização Automática
+   - Salvar as cidades mais recentes na página principal
+   - Garantir que todas as funções do site possuam bons níveis de acessibilidade
+   - Garantir que o mapa interativo seja usável através do teclado
+   - Newsletter de mudanças no clima local
+   - Notificação por WhatsApp/Telegram de mudanças no clima
+   - Garantir desempenho na pesquisa de cidades, aumentando a fluidez do aplicativo
