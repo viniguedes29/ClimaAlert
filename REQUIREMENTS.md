@@ -134,3 +134,4 @@ A partir das informações acima, temos alguns requisitos que podemos extrair da
    - Newsletter de mudanças no clima local
    - Notificação por WhatsApp/Telegram de mudanças no clima
    - Garantir desempenho na pesquisa de cidades, aumentando a fluidez do aplicativo
+   - Permitir busca por CEP e variações
