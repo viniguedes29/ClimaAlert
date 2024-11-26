@@ -18,6 +18,7 @@ def fetch_weather_data(city_name):
     response.raise_for_status()  # Lança exceção em caso de erro
     return response.json()
 
+
 def calculate_extra_flags(temperature, humidity):
     extra = 0
     if temperature > 34:
@@ -33,7 +34,7 @@ def get_weather_by_city_name(request):
         data = fetch_weather_data(city_name)
         extra = calculate_extra_flags(data["main"]["temp"], data["main"]["humidity"])
         weather_description = get_custom_description(data["weather"][0]["id"], extra)
-        
+
         CityWeather = {
             "city_name": data["name"],
             "weather_description": weather_description,
@@ -54,4 +55,3 @@ def get_weather_by_city_name(request):
             {"city_name": city_name, "weather_data": None, "error": str(e)},
             status=404,
         )
-
