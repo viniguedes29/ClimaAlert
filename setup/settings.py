@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "search_localization.apps.SearchLocalizationConfig",
     "weather_alert.apps.WeatherAlertConfig",
     "weather_data.apps.WeatherDataConfig",
+    "weather_graphs",  
 ]
 
 MIDDLEWARE = [
