@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path
 from search_localization.views import home
 from weather_data.views import get_weather_by_city_name
+from weather_graphs.views import get_temperature_graph, get_precipitation_graph
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -29,4 +30,6 @@ urlpatterns = [
         name="get_weather_by_city_name",
     ),
     path("weather/", get_weather_by_city_name, name="weather_by_city_name"),
+    path("temperature-graph/", get_temperature_graph, name="temperature_graph"),
+    path("precipitation-graph/", get_precipitation_graph, name="precipitation_graph"),
 ]

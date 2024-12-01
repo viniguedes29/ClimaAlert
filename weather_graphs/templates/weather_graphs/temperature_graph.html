@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Temperatura</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Previsão de temperatura média diária para os próximos 5 dias - {{ city_name }}</h1>
+
+    {% if graph_data %}
+
+    <canvas id="temperatureChart"></canvas>
+    <script>
+        // Configurar e renderizar o gráfico
+        const ctx = document.getElementById('temperatureChart').getContext('2d');
+        const temperatureChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: "{{ graph_data.dates|safe }}",  // Dias
+                datasets: [{
+                    label: 'Temperatura Média (°C)',
+                    data: "{{ graph_data.average_temperatures|safe }}",  // Temperaturas
+                    borderColor: 'red',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'red',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Dias' },
+                        ticks: {
+                            maxRotation: 45,
+                            minRotation: 45,
+                            autoSkip: true
+                        }
+                    },
+                    y: {
+                        title: { display: true, text: 'Temperatura Média (°C)' },
+                        ticks: {
+                            callback: function(value) {
+                                return value + '°C'; // Adiciona °C aos valores
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    {% else %}
+    <p>{{ error }}</p>
+    {% endif %}
+</body>
+</html>
