@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Precipitação</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Precipitação Média Diária - {{ city_name }}</h1>
+
+    {% if graph_data %}
+    <canvas id="precipitationChart"></canvas>
+    <script>
+        const labels = "{{ graph_data.dates|safe }}";
+        const data = "{{ graph_data.precipitation|safe }}";
+
+        const ctx = document.getElementById('precipitationChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Precipitação (mm)',
+                    data: data,
+                    backgroundColor: 'blue',
+                    borderColor: 'darkblue',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Dias' },
+                    },
+                    y: {
+                        title: { display: true, text: 'Precipitação (mm)' },
+                    }
+                }
+            }
+        });
+    </script>
+    {% else %}
+    <p>{{ error }}</p>
+    {% endif %}
+</body>
+</html>
