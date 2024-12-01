@@ -77,8 +77,8 @@ Para o componente **WeatherGraph (Controller)**, foi adotado o padrão de projet
 
 O componente `WeatherGraph` utiliza o padrão de projeto **Strategy** para delegar a geração de gráficos climáticos a diferentes estratégias especializadas. Isto é, o WeatherGraph não contém a lógica específica para a geração de gráficos, ele delega a responsabilidade para uma das estratégias (e.g., TemperatureGraphStrategy) com base no tipo de gráfico solicitado. Atualmente, as estratégias implementadas incluem:
 
-- **TemperatureGraphStrategy**: Gera gráficos baseados em variações de temperatura ao longo do tempo.
-- **RainfallGraphStrategy**: Gera gráficos para dados de precipitação.
+- **TemperatureGraphStrategy**: Gera gráficos baseados em previsões da média de temperatura ao 5 dias.
+- **PrecipitationGraphStrategy**: Gera gráficos para dados de precipitação em mm.
 
 Essa abordagem permite que novos tipos de gráficos sejam adicionados facilmente, sem modificar o código existente do controller, seguindo o princípio de **Open/Closed** (aberto para extensão, fechado para modificação). 
 
