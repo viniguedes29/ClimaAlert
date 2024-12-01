@@ -5,7 +5,6 @@ from datetime import datetime
 from collections import defaultdict
 
 
-
 def get_temperature_graph(request):
     city_name = request.GET.get("city_name")
 
@@ -21,7 +20,11 @@ def get_temperature_graph(request):
         return render(
             request,
             "weather_graphs/temperature_graph.html",
-            {"city_name": city_name, "graph_data": None, "error": "Cidade não encontrada."},
+            {
+                "city_name": city_name,
+                "graph_data": None,
+                "error": "Cidade não encontrada.",
+            },
             status=404,
         )
 
@@ -35,17 +38,25 @@ def get_temperature_graph(request):
 
     if weather_response.status_code == 200 and "list" in weather_data:
         # Agrupar dados por dia
-        daily_temps = defaultdict(list)  # Exemplo: {"01/12": [26.5, 25.8, ...], "02/12": [24.3, 23.9, ...]}
+        daily_temps = defaultdict(
+            list
+        )  # Exemplo: {"01/12": [26.5, 25.8, ...], "02/12": [24.3, 23.9, ...]}
         for entry in weather_data["list"]:
-            date = datetime.fromtimestamp(entry["dt"]).strftime("%d/%m")  # Extrair data (dia/mês)
-            daily_temps[date].append(entry["main"]["temp"])  # Adicionar temperatura ao dia correspondente
+            date = datetime.fromtimestamp(entry["dt"]).strftime(
+                "%d/%m"
+            )  # Extrair data (dia/mês)
+            daily_temps[date].append(
+                entry["main"]["temp"]
+            )  # Adicionar temperatura ao dia correspondente
 
         # Calcular médias diárias
         dates = []
         average_temperatures = []
         for date, temps in daily_temps.items():
             dates.append(date)
-            average_temperatures.append(sum(temps) / len(temps))  # Média das temperaturas do dia
+            average_temperatures.append(
+                sum(temps) / len(temps)
+            )  # Média das temperaturas do dia
 
         graph_data = {
             "dates": dates,  # Datas dos dias
@@ -61,7 +72,11 @@ def get_temperature_graph(request):
         return render(
             request,
             "weather_graphs/temperature_graph.html",
-            {"city_name": city_name, "graph_data": None, "error": "Erro ao buscar dados climáticos."},
+            {
+                "city_name": city_name,
+                "graph_data": None,
+                "error": "Erro ao buscar dados climáticos.",
+            },
             status=500,
         )
 
@@ -76,7 +91,11 @@ def get_precipitation_graph(request):
     geo_data = geo_response.json()
 
     if not geo_data or geo_response.status_code != 200:
-        return render(request, "weather_graphs/precipitation_graph.html", {"error": "Cidade não encontrada."})
+        return render(
+            request,
+            "weather_graphs/precipitation_graph.html",
+            {"error": "Cidade não encontrada."},
+        )
 
     lat, lon = geo_data[0]["lat"], geo_data[0]["lon"]
 
@@ -86,7 +105,11 @@ def get_precipitation_graph(request):
     forecast_data = forecast_response.json()
 
     if forecast_response.status_code != 200 or "list" not in forecast_data:
-        return render(request, "weather_graphs/precipitation_graph.html", {"error": "Erro ao buscar dados climáticos."})
+        return render(
+            request,
+            "weather_graphs/precipitation_graph.html",
+            {"error": "Erro ao buscar dados climáticos."},
+        )
 
     # Processar dados de precipitação
     daily_precipitation = defaultdict(float)
@@ -101,5 +124,8 @@ def get_precipitation_graph(request):
         "precipitation": list(daily_precipitation.values()),
     }
 
-    return render(request, "weather_graphs/precipitation_graph.html", {"graph_data": graph_data, "city_name": city_name})
-    
+    return render(
+        request,
+        "weather_graphs/precipitation_graph.html",
+        {"graph_data": graph_data, "city_name": city_name},
+    )
