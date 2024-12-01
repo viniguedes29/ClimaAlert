@@ -102,3 +102,4 @@ def get_precipitation_graph(request):
     }
 
     return render(request, "weather_graphs/precipitation_graph.html", {"graph_data": graph_data, "city_name": city_name})
+    
