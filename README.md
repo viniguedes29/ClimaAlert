@@ -1,5 +1,8 @@
 # ClimaAlert
 
+### AVISO: Entre as avaliações A4 e A5, nós reescrevemos toda o código em NodeJS, ao invés de Django por questões de performance e integração, a arquitetura abaixo da avaliação A4 é na versão de Django, o último commit feito em Django é [8dc80ff](https://github.com/viniguedes29/ClimaAlert/tree/8dc80ff22cbd21e025f5aa4101ccdaf942c8e4ea).
+
+
 ## Visão Geral
 
 **ClimaAlert** é uma plataforma dedicada a fornecer informações em tempo real sobre o índice UV e alertas relacionados a riscos climáticos, como queimadas, deslizamentos e inundações. Utilizando mapas interativos e APIs climáticas, o objetivo é auxiliar os usuários na prevenção de riscos e na tomada de decisões seguras.
