@@ -8,6 +8,7 @@ from collections import defaultdict
 GEO_URL = "http://api.openweathermap.org/geo/1.0/direct"
 FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
 
+
 def get_city_coordinates(city_name, api_key):
     """Obtém as coordenadas da cidade via API"""
     geo_url = f"{GEO_URL}?q={city_name}&limit=1&appid={api_key}"
@@ -17,6 +18,7 @@ def get_city_coordinates(city_name, api_key):
     if not geo_data or geo_response.status_code != 200:
         return None
     return geo_data[0]["lat"], geo_data[0]["lon"]
+
 
 def get_temperature_graph(request):
     city_name = request.GET.get("city_name")
