@@ -15,8 +15,7 @@ def fetch_weather_data(city_name):
         "lang": "pt",
     }
     response = requests.get(api_url, params=params)
-    response.raise_for_status()  # Lança exceção em caso de erro
-    return response.json()
+    return response
 
 
 def calculate_extra_flags(temperature, humidity):
@@ -31,7 +30,16 @@ def calculate_extra_flags(temperature, humidity):
 def get_weather_by_city_name(request):
     city_name = request.GET.get("city_name")
     try:
-        data = fetch_weather_data(city_name)
+        response = fetch_weather_data(city_name)
+        data = response.json()
+        if response.status_code != 200:
+            return render(
+                request,
+                "weather_data/weather.html",
+                {"city_name": city_name, "weather_data": None},
+                status=404,
+            )
+
         extra = calculate_extra_flags(data["main"]["temp"], data["main"]["humidity"])
         weather_description = get_custom_description(data["weather"][0]["id"], extra)
 
