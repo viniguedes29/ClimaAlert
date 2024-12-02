@@ -3,8 +3,6 @@ from django.urls import reverse
 from unittest.mock import patch
 import json
 
-# TODO(Thiago4532): Adicionar testes para as mensagens customizadas
-
 
 class WeatherTestCase(TestCase):
     def setUp(self):
@@ -15,8 +13,8 @@ class WeatherTestCase(TestCase):
         # Mock the API response
         mock_response = {
             "name": "São Paulo",
-            "weather": [{"id": 800, "description": "céu limpo"}],
-            "main": {"temp": 25, "feels_like": 28, "humidity": 60},
+            "weather": [{"description": "céu limpo"}],
+            "main": {"temp": 25, "humidity": 60},
             "clouds": {"all": 0},
         }
         mock_get.return_value.status_code = 200
