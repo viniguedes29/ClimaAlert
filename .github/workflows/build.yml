@@ -1,20 +1,36 @@
-name: Build
+name: Build and Test
 
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Checkout the code
+      - name: Checkout code
         uses: actions/checkout@v3
 
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18" # Use the version you need
+
+      # Install dependencies
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          cd backend
+          npm install
 
+      # Run migrations
+      - name: Run migrations
+        run: |
+          cd backend
+          npm run migrate
+
+      # Run the tests
       - name: Run tests
-        run: python manage.py test
-
-      - name: Run build
-        run: npm run build
+        run: |
+          cd backend
+          npm test
