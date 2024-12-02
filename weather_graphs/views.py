@@ -14,7 +14,7 @@ def get_temperature_graph(request):
 
     # Configurações da API
     api_key = settings.OPEN_WEATHER_API_KEY
-    geo_url = f"http://api.openweathermap.org/geo/1.0/direct?q={city_name}&limit=1&appid={api_key}"
+    geo_url = f"{GEO_URL}?q={city_name}&limit=1&appid={api_key}"
 
     # Obter as coordenadas da cidade
     geo_response = requests.get(geo_url)
@@ -36,7 +36,7 @@ def get_temperature_graph(request):
     lat, lon = geo_data[0]["lat"], geo_data[0]["lon"]
 
     # Chamar a API de Previsão
-    weather_url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&units=metric&appid={api_key}"
+    weather_url = f"{FORECAST_URL}?lat={lat}&lon={lon}&units=metric&appid={api_key}"
     weather_response = requests.get(weather_url)
     weather_data = weather_response.json()
 
