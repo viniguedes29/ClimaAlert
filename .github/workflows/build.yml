@@ -1,32 +1,36 @@
-name: Build
+name: Build and Test
 
 on: [push, workflow_dispatch]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Checkout the code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          python-version: '3.11.4'
-  
-      - name: Install Black
-        run: |
-          pip install black
-  
-      - name: Run Black
-        run: |
-          black --check .
+          node-version: "18" # Use the version you need
 
+      # Install dependencies
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          cd backend
+          npm install
 
+      # Run migrations
+      - name: Run migrations
+        run: |
+          cd backend
+          npm run migrate
+
+      # Run the tests
       - name: Run tests
-        run: python manage.py test
-        env:
-          OPEN_WEATHER_API_KEY: ${{ secrets.OPEN_WEATHER_API_KEY }}
+        run: |
+          cd backend
+          npm test

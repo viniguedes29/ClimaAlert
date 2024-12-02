@@ -29,6 +29,9 @@ def calculate_extra_flags(temperature, humidity):
 
 def get_weather_by_city_name(request):
     city_name = request.GET.get("city_name")
+
+    api_key = settings.OPEN_WEATHER_API_KEY
+    api_url = f"http://api.openweathermap.org/data/2.5/weather?q={city_name}&appid={api_key}&units=metric&lang=pt"
     try:
         response = fetch_weather_data(city_name)
         data = response.json()
