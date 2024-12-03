@@ -56,6 +56,23 @@ describe('GET /precipitation-graph - Teste de Valor Limite para Precipitação',
     expect(response.header['content-type']).toBe('image/png');
   });
 
+  it('should return an error if precipitation exceeds 999mm', async () => {
+    const validCityName = 'Manaus';
+
+    getForecastByCityName.mockResolvedValue({
+      list: [{ dt: 1638316800, rain: { '3h': 1000 } }],
+    });
+
+    const response = await request(app)
+      .get('/precipitation-graph')
+      .query({ name: validCityName });
+
+    expect(response.status).toBe(400); // Expecting a 400 Bad Request
+    expect(response.body).toEqual({
+      error: 'Precipitation value out of valid range (0 - 999 mm).',
+    });
+  });
+
   afterAll(() => {
     jest.restoreAllMocks();
   });

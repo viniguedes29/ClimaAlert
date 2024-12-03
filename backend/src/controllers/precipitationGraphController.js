@@ -5,6 +5,10 @@ const isValidPrecipitation = (rain) => {
   return rain >= 0 && rain <= 999;
 };
 
+const isMissingPrecipitation = (rain) => {
+  return rain === null || rain === undefined;
+};
+
 const precipitationGraphController = async (req, res) => {
   const cityName = req.query.name;
 
@@ -19,19 +23,25 @@ const precipitationGraphController = async (req, res) => {
     forecastData.list.forEach((entry) => {
       const date = new Date(entry.dt * 1000).toLocaleDateString('en-GB');
       let rain = entry.rain ? entry.rain['3h'] : 0;
-
-      // Validação da precipitação
-      if (!isValidPrecipitation(rain)) {
-        return res.status(400).json({
-          error: 'Precipitation value out of valid range (0 - 999 mm).',
-        });
-      }
-
       if (!dailyPrecipitation[date]) {
         dailyPrecipitation[date] = 0;
       }
       dailyPrecipitation[date] += rain;
     });
+
+    //get maximum precipitation by date
+    let maxPrecipitation = 0;
+    for (const date in dailyPrecipitation) {
+      if (dailyPrecipitation[date] > maxPrecipitation) {
+        maxPrecipitation = dailyPrecipitation[date];
+      }
+    }
+
+    if (!isValidPrecipitation(maxPrecipitation)) {
+      return res.status(400).json({
+        error: 'Precipitation value out of valid range (0 - 999 mm).',
+      });
+    }
 
     const labels = Object.keys(dailyPrecipitation);
     const data = Object.values(dailyPrecipitation);
