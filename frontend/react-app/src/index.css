@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.main-section {
+  margin-top: 0; /* Garante que não há margem extra */
+  padding-top: 0;
+  height: 100vh; /* Altura da seção igual à altura da tela */
+  background-image: url('/public/img/background_home.png');
+ /* Caminho para o mapa de fundo */
+  background-size: cover; /* Garante que a imagem cubra todo o espaço */
+  background-position: center; /* Centraliza a imagem */
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  color: white; /* Texto branco para contraste */
+  text-align: center; /* Alinha o texto centralmente */
+  flex-direction: column;
+}
+
+.content h1 {
+  font-size: 1.8rem; /* Tamanho grande para o título */
+  font-weight: bold;
+}
+
+.content p {
+  font-size: 1.5rem; /* Subtítulo menor */
+}
+
+.main-section div{
+  text-align: center;
+  margin: 50px;
+}
