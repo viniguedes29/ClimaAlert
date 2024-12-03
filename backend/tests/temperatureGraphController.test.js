@@ -31,8 +31,8 @@ describe('GET /temperature-graph', () => {
     expect(response.body).toEqual({ error: 'Invalid city name format.' });
   });
 
-  it('should return a 400 error for a city name with maximum length (255 characters)', async () => {
-    const maxLengthCityName = 'A'.repeat(256); // 255 caracteres 'A'
+  it('should return a 400 error for a city name with maximum length (50 characters)', async () => {
+    const maxLengthCityName = 'A'.repeat(51); // 255 caracteres 'A'
 
     const response = await request(app)
       .get('/temperature-graph')
