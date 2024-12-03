@@ -18,6 +18,19 @@ const isFutureDate = (date) => {
   return date > now;
 };
 
+const hasFutureDate = (forecastData) => {
+  return forecastData.list.some((entry) => {
+    const date = new Date(entry.dt * 1000);
+    return isFutureDate(date);
+  });
+};
+
+const hasInvalidDateFormat = (forecastData) => {
+  return forecastData.list.some((entry) => {
+    return !isValidDateFormat(entry.dt);
+  });
+};
+
 const precipitationGraphController = async (req, res) => {
   const cityName = req.query.name;
 
@@ -29,20 +42,20 @@ const precipitationGraphController = async (req, res) => {
     const forecastData = await getForecastByCityName(cityName);
     const dailyPrecipitation = {};
 
+    if (hasInvalidDateFormat(forecastData)) {
+      return res
+        .status(400)
+        .json({ error: 'Invalid date format detected in forecast.' });
+    }
+
+    if (hasFutureDate(forecastData)) {
+      return res
+        .status(400)
+        .json({ error: 'Future date detected in forecast.' });
+    }
+
     forecastData.list.forEach((entry) => {
-      if (!isValidDateFormat(entry.dt)) {
-        return res
-          .status(400)
-          .json({ error: 'Invalid date format detected in forecast.' });
-      }
       const date = new Date(entry.dt * 1000);
-
-      if (isFutureDate(date)) {
-        return res
-          .status(400)
-          .json({ error: 'Future date detected in forecast.' });
-      }
-
       let rain = entry.rain ? entry.rain['3h'] : 0;
       if (!dailyPrecipitation[date]) {
         dailyPrecipitation[date] = 0;
