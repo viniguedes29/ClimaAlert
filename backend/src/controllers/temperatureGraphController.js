@@ -1,11 +1,33 @@
 const { getForecastByCityName } = require('../services/weatherService');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 
+// Função de validação do tamanho do nome da cidade
+const isValidCityNameLength = (name) => {
+  return name.length <= 50;
+};
+
+// Função de validação do formato do nome da cidade (só permite letras, espaços, acentos, apóstrofos e hífens)
+const isValidCityNameFormat = (name) => {
+  return /^[a-zA-ZÀ-ÿ\s'-]+$/.test(name);
+};
+
 const temperatureGraphController = async (req, res) => {
   const cityName = req.query.name;
 
   if (!cityName) {
     return res.status(400).json({ error: 'City name must be provided.' });
+  }
+
+  // Validação do tamanho do nome da cidade
+  if (!isValidCityNameLength(cityName)) {
+    return res
+      .status(400)
+      .json({ error: 'City name must be between 1 and 255 characters.' });
+  }
+
+  // Validação do formato do nome da cidade
+  if (!isValidCityNameFormat(cityName)) {
+    return res.status(400).json({ error: 'Invalid city name format.' });
   }
 
   try {
@@ -75,10 +97,10 @@ const temperatureGraphController = async (req, res) => {
 
     const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
 
-    // Send the image back to the client
     res.set('Content-Type', 'image/png');
     res.send(imageBuffer);
   } catch (error) {
+    console.error(error); // Adicionando log de erro para depuração
     res.status(error.status || 500).json({ error: error.message });
   }
 };
