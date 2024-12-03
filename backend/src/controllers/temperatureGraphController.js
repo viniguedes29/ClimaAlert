@@ -15,9 +15,8 @@ const temperatureGraphController = async (req, res) => {
       temperature: item.main.temp,
     }));
 
-    // Group by date and get the average temperature
     const groupedData = temperatureData.reduce((acc, item) => {
-      const date = item.date.split(' ')[0]; // Extract the date (YYYY-MM-DD)
+      const date = item.date.split(' ')[0];
       if (!acc[date]) {
         acc[date] = [];
       }
@@ -25,30 +24,28 @@ const temperatureGraphController = async (req, res) => {
       return acc;
     }, {});
 
-    // Calculate the average temperature for each date
     const dates = [];
     const avgTemperatures = [];
     for (const date in groupedData) {
       const temperatures = groupedData[date];
       const sum = temperatures.reduce((acc, temp) => acc + temp, 0);
       const avg = sum / temperatures.length;
-      dates.push(date); // Add the date to the labels array
-      avgTemperatures.push(avg); // Add the average temperature to the data array
+      dates.push(date);
+      avgTemperatures.push(avg);
     }
 
-    // Set up chart options
-    const width = 800; // Width of the chart
-    const height = 600; // Height of the chart
+    const width = 800;
+    const height = 600;
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
 
     const configuration = {
       type: 'line',
       data: {
-        labels: dates, // Use the dates array as labels
+        labels: dates,
         datasets: [
           {
             label: 'Average Temperature (°C)',
-            data: avgTemperatures, // Use the avgTemperatures array as data
+            data: avgTemperatures,
             fill: false,
             borderColor: 'rgba(75, 192, 192, 1)',
             tension: 0.1,
@@ -59,7 +56,7 @@ const temperatureGraphController = async (req, res) => {
         responsive: true,
         scales: {
           x: {
-            type: 'category', // Use category scale for dates
+            type: 'category',
             title: {
               display: true,
               text: 'Date',
@@ -76,7 +73,6 @@ const temperatureGraphController = async (req, res) => {
       },
     };
 
-    // Render the chart to an image
     const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
 
     // Send the image back to the client
