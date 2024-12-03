@@ -6,7 +6,7 @@ jest.mock('../src/services/weatherService', () => ({
   getForecastByCityName: jest.fn(),
 }));
 
-describe('GET /precipitation-graph - Teste de Valor Limite para Precipitação', () => {
+describe('GET /precipitation-graph - Teste de Valor Limite para Precipitação e Validação de Data', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -67,11 +67,50 @@ describe('GET /precipitation-graph - Teste de Valor Limite para Precipitação',
       .get('/precipitation-graph')
       .query({ name: validCityName });
 
-    expect(response.status).toBe(400); // Expecting a 400 Bad Request
+    expect(response.status).toBe(400);
     expect(response.body).toEqual({
       error: 'Precipitation value out of valid range (0 - 999 mm).',
     });
   });
+
+  //   it('should return an error if the forecast date is in the future', async () => {
+  //     const validCityName = 'Brasília';
+
+  //     const futureDate = new Date();
+  //     futureDate.setFullYear(futureDate.getFullYear() + 1);
+
+  //     getForecastByCityName.mockResolvedValue({
+  //       list: [
+  //         { dt: Math.floor(futureDate.getTime() / 1000), rain: { '3h': 10 } },
+  //       ],
+  //     });
+
+  //     const response = await request(app)
+  //       .get('/precipitation-graph')
+  //       .query({ name: validCityName });
+
+  //     expect(response.status).toBe(400);
+  //     expect(response.body).toEqual({
+  //       error: 'Forecast date cannot be in the future.',
+  //     });
+  //   });
+
+  //   it('should return an error if the forecast date is invalid', async () => {
+  //     const validCityName = 'Curitiba';
+
+  //     getForecastByCityName.mockResolvedValue({
+  //       list: [{ dt: 'invalid-date', rain: { '3h': 10 } }],
+  //     });
+
+  //     const response = await request(app)
+  //       .get('/precipitation-graph')
+  //       .query({ name: validCityName });
+
+  //     expect(response.status).toBe(400);
+  //     expect(response.body).toEqual({
+  //       error: 'Invalid date format in forecast data.',
+  //     });
+  //   });
 
   afterAll(() => {
     jest.restoreAllMocks();

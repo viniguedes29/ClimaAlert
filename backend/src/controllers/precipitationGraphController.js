@@ -9,6 +9,15 @@ const isMissingPrecipitation = (rain) => {
   return rain === null || rain === undefined;
 };
 
+const isValidDateFormat = (timestamp) => {
+  return Number.isInteger(timestamp) && timestamp > 0;
+};
+
+const isFutureDate = (date) => {
+  const now = new Date();
+  return date > now;
+};
+
 const precipitationGraphController = async (req, res) => {
   const cityName = req.query.name;
 
@@ -21,7 +30,19 @@ const precipitationGraphController = async (req, res) => {
     const dailyPrecipitation = {};
 
     forecastData.list.forEach((entry) => {
-      const date = new Date(entry.dt * 1000).toLocaleDateString('en-GB');
+      if (!isValidDateFormat(entry.dt)) {
+        return res
+          .status(400)
+          .json({ error: 'Invalid date format detected in forecast.' });
+      }
+      const date = new Date(entry.dt * 1000);
+
+      if (isFutureDate(date)) {
+        return res
+          .status(400)
+          .json({ error: 'Future date detected in forecast.' });
+      }
+
       let rain = entry.rain ? entry.rain['3h'] : 0;
       if (!dailyPrecipitation[date]) {
         dailyPrecipitation[date] = 0;
@@ -29,7 +50,6 @@ const precipitationGraphController = async (req, res) => {
       dailyPrecipitation[date] += rain;
     });
 
-    //get maximum precipitation by date
     let maxPrecipitation = 0;
     for (const date in dailyPrecipitation) {
       if (dailyPrecipitation[date] > maxPrecipitation) {
