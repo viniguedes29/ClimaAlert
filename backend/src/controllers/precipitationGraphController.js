@@ -1,6 +1,10 @@
 const { getForecastByCityName } = require('../services/weatherService');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 
+const isValidPrecipitation = (rain) => {
+  return rain >= 0 && rain <= 999;
+};
+
 const precipitationGraphController = async (req, res) => {
   const cityName = req.query.name;
 
@@ -14,7 +18,14 @@ const precipitationGraphController = async (req, res) => {
 
     forecastData.list.forEach((entry) => {
       const date = new Date(entry.dt * 1000).toLocaleDateString('en-GB');
-      const rain = entry.rain ? entry.rain['3h'] : 0;
+      let rain = entry.rain ? entry.rain['3h'] : 0;
+
+      // Validação da precipitação
+      if (!isValidPrecipitation(rain)) {
+        return res.status(400).json({
+          error: 'Precipitation value out of valid range (0 - 999 mm).',
+        });
+      }
 
       if (!dailyPrecipitation[date]) {
         dailyPrecipitation[date] = 0;
