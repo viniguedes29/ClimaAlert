@@ -40,3 +40,11 @@ p {
     align-items: center;
     margin: 20px 0;
 }
+
+.text-with-outline {
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000; /* Contorno preto de 1 pixel */
+}
