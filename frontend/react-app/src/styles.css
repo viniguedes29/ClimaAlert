@@ -33,3 +33,11 @@ p {
 .weather-card img {
     border-radius: 10px; /* Bordas arredondadas para a imagem */
 }
+.text-with-outline {
+    text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000; /* Contorno preto de 1 pixel */
+}
+

@@ -18,7 +18,7 @@ code {
   margin-top: 0; /* Garante que não há margem extra */
   padding-top: 0;
   height: 100vh; /* Altura da seção igual à altura da tela */
-  background-image: url('/public/img/background_home.png');
+  background-image: url('/public/img/background_home.jpg');
  /* Caminho para o mapa de fundo */
   background-size: cover; /* Garante que a imagem cubra todo o espaço */
   background-position: center; /* Centraliza a imagem */
