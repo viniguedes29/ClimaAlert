@@ -19,7 +19,7 @@ function App() {
                             placeholder="Nome da cidade"
                             aria-label="Search"
                         />
-                        <Button variant="outline-success" className="mt-2">Buscar</Button>
+                        <Button variant="light" className="mt-2">Buscar</Button>
                     </Form>
                 </div>
 
@@ -32,7 +32,7 @@ function App() {
                             placeholder="Nome da cidade"
                             aria-label="Search"
                         />
-                        <Button variant="outline-success" className="mt-2">Buscar</Button>
+                        <Button variant="light" className="mt-2">Buscar</Button>
                     </Form>
                 </div>
 
@@ -45,7 +45,7 @@ function App() {
                             placeholder="Nome da cidade"
                             aria-label="Search"
                         />
-                        <Button variant="outline-success" className="mt-2">Buscar</Button>
+                        <Button variant="light" className="mt-2">Buscar</Button>
                     </Form>
                 </div>
             </Container>
