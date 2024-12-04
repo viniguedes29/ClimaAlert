@@ -33,3 +33,10 @@ p {
 .weather-card img {
     border-radius: 10px; /* Bordas arredondadas para a imagem */
 }
+
+.forecast-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
