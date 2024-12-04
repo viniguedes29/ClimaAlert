@@ -48,14 +48,15 @@ const precipitationGraphController = async (req, res) => {
         .json({ error: 'Invalid date format detected in forecast.' });
     }
 
-    if (hasFutureDate(forecastData)) {
-      return res
-        .status(400)
-        .json({ error: 'Future date detected in forecast.' });
-    }
+    // if (hasFutureDate(forecastData)) {
+    //   return res
+    //     .status(400)
+    //     .json({ error: 'Future date detected in forecast.' });
+    // }
 
     forecastData.list.forEach((entry) => {
-      const date = new Date(entry.dt * 1000);
+      // const date = new Date(entry.dt * 1000);
+      const date = entry.dt_txt.split(' ')[0];
       let rain = entry.rain ? entry.rain['3h'] : 0;
       if (!dailyPrecipitation[date]) {
         dailyPrecipitation[date] = 0;
