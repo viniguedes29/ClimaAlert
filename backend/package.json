@@ -21,6 +21,7 @@
     "chart.js": "^3.9.1",
     "chartjs": "^0.3.24",
     "chartjs-node-canvas": "^4.1.6",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "knex": "^3.1.0",
     "plotly.js": "^2.35.2",
