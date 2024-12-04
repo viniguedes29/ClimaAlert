@@ -19,4 +19,29 @@ async function cityFromCoords(lat, lon) {
     return city || null; // Return the closest city or null if no cities exist
 }
 
-module.exports = { cityFromCoords };
+/**
+ * Find the coordinates of the given city by name.
+ * @param {string} cityName - Name of the city.
+ * @returns {Object|null} The coordinates of the city or null if the city is not found.
+ */
+async function coordsFromCityName(cityName) {
+    if (!cityName) {
+        throw new Error('City name is required.');
+    }
+
+    const city = await knex('cities')
+        .select('id', 'name', 'lat', 'lon')
+        .where('name', cityName)
+        .first();
+
+    if (!city) {
+        return null;
+    }
+
+    return {
+        lat: city.lat,
+        lon: city.lon
+    };
+}
+
+module.exports = { cityFromCoords, coordsFromCityName };
