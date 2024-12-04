@@ -27,9 +27,7 @@ const hasFutureDate = (forecastData) => {
 
 const hasInvalidDateFormat = (forecastData) => {
   return forecastData.list.some((entry) => {
-    console.log(entry.dt);
     if (typeof entry.dt !== 'number') {
-      console.log('vai se fuder');
       return true;
     }
     return !isValidDateFormat(entry.dt);
@@ -74,8 +72,6 @@ const precipitationGraphController = async (req, res) => {
       });
     }
 
-    console.log('iuuuuu');
-
     const labels = Object.keys(dailyPrecipitation);
     const data = Object.values(dailyPrecipitation);
 
@@ -116,8 +112,6 @@ const precipitationGraphController = async (req, res) => {
         },
       },
     };
-
-    console.log('vai se fuder');
 
     const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
 
