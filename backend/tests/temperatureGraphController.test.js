@@ -17,7 +17,7 @@ describe('GET /temperature-graph', () => {
     const response = await request(app).get('/temperature-graph');
 
     expect(response.status).toBe(400);
-    expect(response.body).toEqual({ error: 'City name must be provided.' });
+    expect(response.body).toEqual({ error: 'Provide either "name", "id", or "lat/lon".' });
   });
 
   it('should return a 400 error if city name is invalid', async () => {
