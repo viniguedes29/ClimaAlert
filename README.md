@@ -1,6 +1,17 @@
 # Como Iniciar o servidor
 
-## 1. Backend
+## Opção 1. Usando .sh
+
+Foi implementado um arquivo start_server.sh para facilitar o processo de inicialização do servidor
+
+```bash
+chmod +xxx start_server.sh
+./start_server.sh <API_KEY>
+```
+
+## Opção 2. Manualmente
+
+### 1. Backend
 
 ```bash
 cd backend/
@@ -11,7 +22,7 @@ npm run migrate
 npm run dev
 ```
 
-## 2. Frontend
+### 2. Frontend
 
 ```bash
 cd frontend/react-app/
