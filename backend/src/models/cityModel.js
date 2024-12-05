@@ -44,4 +44,47 @@ async function coordsFromCityName(cityName) {
     };
 }
 
-module.exports = { cityFromCoords, coordsFromCityName };
+/**
+ * Find the coordinates of the given city by ID.
+ * @param {number} cityId - The ID of the city.
+ * @returns {Object|null} The coordinates of the city or null if the city is not found.
+ */
+async function coordsFromId(cityId) {
+    if (cityId === undefined || typeof cityId !== 'number') {
+        throw new Error('City ID must be a valid number.');
+    }
+
+    const city = await knex('cities')
+        .select('id', 'name', 'lat', 'lon')
+        .where('id', cityId)
+        .first();
+
+    if (!city) {
+        return null;
+    }
+
+    return {
+        lat: city.lat,
+        lon: city.lon
+    };
+}
+
+/**
+ * Find the name of the city by its ID.
+ * @param {number} cityId - The ID of the city.
+ * @returns {string|null} The name of the city or null if the city is not found.
+ */
+async function cityFromId(cityId) {
+    if (cityId === undefined || typeof cityId !== 'number') {
+        throw new Error('City ID must be a valid number.');
+    }
+
+    const city = await knex('cities')
+        .select('name')
+        .where('id', cityId)
+        .first();
+
+    return city || null;
+}
+
+module.exports = { cityFromCoords, coordsFromCityName, coordsFromId, cityFromId };
