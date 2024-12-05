@@ -1,4 +1,4 @@
-const { getForecastByCityName } = require('../services/weatherService');
+const { getForecastByCityName, getForecastById, getForecastByCoords } = require('../services/weatherService');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 
 // Função de validação do tamanho do nome da cidade
@@ -13,25 +13,59 @@ const isValidCityNameFormat = (name) => {
 
 const temperatureGraphController = async (req, res) => {
   const cityName = req.query.name;
+  const cityId = req.query.id;
 
-  if (!cityName) {
-    return res.status(400).json({ error: 'City name must be provided.' });
+  const lat = parseFloat(req.query.lat);
+  const lon = parseFloat(req.query.lon);
+
+  const nameValid = cityName !== undefined;
+  const idValid = cityId !== undefined;
+  const coordsValid = req.query.lat !== undefined && req.query.lon !== undefined;
+
+  // Contagem de parâmetros válidos fornecidos
+  const count = nameValid + idValid + coordsValid;
+
+  if (count === 0) {
+    return res.status(400).json({ error: 'Provide either "name", "id", or "lat/lon".' });
   }
 
-  // Validação do tamanho do nome da cidade
-  if (!isValidCityNameLength(cityName)) {
-    return res
-      .status(400)
-      .json({ error: 'City name must be between 1 and 255 characters.' });
+  if (count > 1) {
+    return res.status(400).json({ error: 'Provide only one: "name", "id", or "lat/lon".' });
   }
 
-  // Validação do formato do nome da cidade
-  if (!isValidCityNameFormat(cityName)) {
-    return res.status(400).json({ error: 'Invalid city name format.' });
+  // Validação dos parâmetros
+  if (cityName) {
+    if (!isValidCityNameLength(cityName)) {
+      return res.status(400).json({ error: 'City name must be between 1 and 255 characters.' });
+    }
+
+    if (!isValidCityNameFormat(cityName)) {
+      return res.status(400).json({ error: 'Invalid city name format.' });
+    }
+  }
+
+  if (coordsValid) {
+    if (isNaN(lat) || isNaN(lon)) {
+      return res.status(400).json({ error: 'Latitude and longitude must be valid numbers.' });
+    }
+    if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+      return res.status(400).json({ error: 'Latitude must be between -90 and 90. Longitude must be between -180 and 180.' });
+    }
   }
 
   try {
-    const forecastData = await getForecastByCityName(cityName);
+    let forecastData;
+
+    // Obtenção dos dados da previsão de acordo com o tipo de parâmetro fornecido
+    if (cityName) {
+      forecastData = await getForecastByCityName(cityName);
+    } else if (cityId) {
+      forecastData = await getForecastById(cityId);
+    } else if (!isNaN(lat) && !isNaN(lon)) {
+      forecastData = await getForecastByCoords(lat, lon);
+    }
+
+    // Transformação dos dados em dados de temperatura média diária
     const temperatureData = forecastData.list.map((item) => ({
       date: item.dt_txt,
       temperature: item.main.temp,
@@ -56,6 +90,7 @@ const temperatureGraphController = async (req, res) => {
       avgTemperatures.push(avg);
     }
 
+    // Configuração do gráfico com ChartJS
     const width = 800;
     const height = 600;
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
@@ -100,7 +135,7 @@ const temperatureGraphController = async (req, res) => {
     res.set('Content-Type', 'image/png');
     res.send(imageBuffer);
   } catch (error) {
-    console.error(error); // Adicionando log de erro para depuração
+    console.error('Error fetching forecast data:', error);
     res.status(error.status || 500).json({ error: error.message });
   }
 };

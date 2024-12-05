@@ -1,5 +1,5 @@
 const { APIError, OpenWeatherAPI } = require('../integrations/openWeather');
-const { cityFromCoords, coordsFromCityName, coordsFromId } = require('../models/cityModel');
+const { cityFromCoords } = require('../models/cityModel');
 
 async function getWeatherByCityName(cityName) {
   return await OpenWeatherAPI.getWeather({ q: cityName });
@@ -27,14 +27,40 @@ async function getWeatherByCoords(lat, lon) {
   }
 
   const city = await cityFromCoords(lat, lon);
-  if (!city) {
+  if (!city)
     throw new APIError({
       status: 404,
       message: 'No city found for the given coordinates',
     });
-  }
 
   return await getWeatherById(city.id);
+}
+
+async function getForecastById(cityId) {
+  return await OpenWeatherAPI.getForecast({ id: cityId });
+}
+
+async function getForecastByCoords(lat, lon) {
+  if (
+    typeof lat !== 'number' ||
+    typeof lon !== 'number' ||
+    isNaN(lat) ||
+    isNaN(lon)
+  ) {
+    throw new APIError({
+      status: 400,
+      message: 'Latitude and longitude must be valid numbers',
+    });
+  }
+
+  const city = await cityFromCoords(lat, lon);
+  if (!city)
+    throw new APIError({
+      status: 404,
+      message: 'No city found for the given coordinates',
+    });
+
+  return await getForecastById(city.id);
 }
 
 async function getAirPollutionByCoords(lat, lon) {
@@ -102,6 +128,8 @@ module.exports = {
   getWeatherById,
   getWeatherByCoords,
   getForecastByCityName,
+  getForecastById,
+  getForecastByCoords,
   getAirPollutionByCoords,
   getAirPollutionById,
   getAirPollutionByCityName,
