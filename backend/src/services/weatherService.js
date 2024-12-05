@@ -1,5 +1,5 @@
 const { APIError, OpenWeatherAPI } = require('../integrations/openWeather');
-const { cityFromCoords } = require('../models/cityModel');
+const { cityFromCoords, coordsFromCityName } = require('../models/cityModel');
 
 async function getWeatherByCityName(cityName) {
   return await OpenWeatherAPI.getWeather({ q: cityName });
