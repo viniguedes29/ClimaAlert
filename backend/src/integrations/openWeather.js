@@ -12,6 +12,7 @@ class APIError extends Error {
 const baseUrl = 'http://api.openweathermap.org';
 const weatherUrl = `${baseUrl}/data/2.5/weather`;
 const forecastUrl = `${baseUrl}/data/2.5/forecast`;
+const airPollutionUrl = `${baseUrl}/data/2.5/air_pollution`;
 const apiKey = OPEN_WEATHER_API_KEY;
 
 const OpenWeatherAPI = {
@@ -59,6 +60,30 @@ const OpenWeatherAPI = {
         throw new APIError(error.response.status, message);
       } else {
         throw new APIError(500, 'Failed to fetch weather data');
+      }
+    }
+  },
+
+  async getAirPollution(lat, lon) {
+    if (typeof lat !== 'number' || typeof lon !== 'number' || isNaN(lat) || isNaN(lon)) {
+      throw new APIError(400, 'Latitude and longitude must be valid numbers.');
+    }
+
+    try {
+      const response = await axios.get(airPollutionUrl, {
+        params: {
+          lat,
+          lon,
+          appid: apiKey,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (error.response) {
+        const message = error.response.data.message || 'Unknown error occurred';
+        throw new APIError(error.response.status, message);
+      } else {
+        throw new APIError(500, 'Failed to fetch air pollution data');
       }
     }
   },
