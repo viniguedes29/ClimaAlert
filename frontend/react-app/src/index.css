@@ -30,6 +30,20 @@ code {
   flex-direction: column;
 }
 
+.background-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url('/public/img/background_home.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
 .content h1 {
   font-size: 1.8rem; /* Tamanho grande para o título */
   font-weight: bold;
